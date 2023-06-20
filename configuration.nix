@@ -29,32 +29,17 @@
     #useXkbConfig = true; 
   };
 
-  # Configure keymap in X11
-  services.xserver = {
-    #enable = true;
-    layout = "us";
-    xkbVariant = "altgr-intl";
-    libinput = {
+  programs.hyprland = {
       enable = true;
-      touchpad.accelProfile = "flat";
-      touchpad.tapping = true;
-      mouse.accelProfile = "flat";
-    };
-  };
 
-  programs.sway = {
-      enable = true;
-      wrapperFeatures.gtk = true;
-      extraPackages = with pkgs; [
-        alacritty
-        wl-clipboard
-        mako
-        wdisplays
-      ];
+      xwayland = {
+          enable = true;
+          hidpi = false;
+      };
   };
 
   environment.loginShellInit = ''
-    [[ "$(tty)" == /dev/tty1 ]] && exec sway
+    [[ "$(tty)" == /dev/tty1 ]] && Hyprland
   '';
 
   # Enable sound.
@@ -76,6 +61,7 @@
     wget
     git
     gcc
+    nerdfonts
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
