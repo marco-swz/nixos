@@ -38,6 +38,8 @@
       };
   };
 
+  programs.waybar.enable = true;
+
   environment.loginShellInit = ''
     [[ "$(tty)" == /dev/tty1 ]] && Hyprland
   '';
@@ -61,7 +63,9 @@
     wget
     git
     gcc
+    pavucontrol
     nerdfonts
+    firefox
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
