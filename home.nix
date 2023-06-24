@@ -7,12 +7,20 @@
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
+    nnn
+    zathura
     age
     chezmoi
     alacritty    
+    zellij
     neovim
+    openconnect
+    docker
     python311
     python311Packages.pip
-    zellij
+    nodejs_20
+    rustup
+    go
   ];
 }
+
