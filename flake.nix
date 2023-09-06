@@ -23,7 +23,21 @@
       nix = lib.nixosSystem {
         inherit system;
         modules = [ 
-          ./configuration.nix 
+          ./hosts/nix/configuration.nix 
+          home-manager.nixosModules.home-manager {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.marco = {
+              imports = [ ./home.nix ];
+            };
+          }
+        ];
+      };
+
+      nixos = lib.nixosSystem {
+        inherit system;
+        modules = [ 
+          ./hosts/nixos/configuration.nix 
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;

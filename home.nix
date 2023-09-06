@@ -15,11 +15,10 @@
     zellij
     neovim
     openconnect
-    docker
     python311
     python311Packages.pip
     nodejs_20
-    rustup
+    cargo
     go
   ];
 }
