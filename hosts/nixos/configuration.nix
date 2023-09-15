@@ -77,15 +77,14 @@ imports =
 
     users.users.marco = {
         isNormalUser = true;
-        extraGroups = [ "wheel" "networkmanager" ];
-        packages = with pkgs; [
-            tree
-        ];
+        extraGroups = [ "wheel" "networkmanager" "kvm" "libwirtd" "docker" ];
+        packages = with pkgs; [];
     };
 
     # List packages installed in system profile. To search, run:
     # $ nix search wget
     environment.systemPackages = with pkgs; [
+        tree
         vim
         wget
         git
@@ -97,17 +96,10 @@ imports =
         zip
         unzip
         docker
+        tmux
     ];
 
     virtualisation.docker.enable = true;
-
-    # Some programs need SUID wrappers, can be configured further or are
-    # started in user sessions.
-    # programs.mtr.enable = true;
-    # programs.gnupg.agent = {
-    #   enable = true;
-    #   enableSSHSupport = true;
-    # };
 
     services.openssh.enable = true;
 
