@@ -20,6 +20,7 @@
     nodejs_20
     cargo
     go
+    zig
   ];
 }
 
