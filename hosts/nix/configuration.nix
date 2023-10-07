@@ -89,6 +89,8 @@ imports =
         wget
         git
         gcc
+        pkg-config
+        openssl
         pavucontrol
         nerdfonts
         firefox
