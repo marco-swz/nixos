@@ -14,8 +14,8 @@ imports =
     #};
     
     # Use the systemd-boot EFI boot loader.
-    boot.loader.systemd-boot.enable = true;
-    boot.loader.efi.canTouchEfiVariables = true;
+    boot.loader.grub.enable = true;
+    boot.loader.grub.device = "/dev/sda";
 
     networking.hostName = "nix"; # Define your hostname.
     networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
@@ -49,10 +49,6 @@ imports =
     '';
 
     hardware.bluetooth.enable = true;
-
-    # Enable sound.
-    #sound.enable = true;
-    #hardware.pulseaudio.enable = true;
 
     security.rtkit.enable = true;
     services.pipewire = {
@@ -90,7 +86,7 @@ imports =
         git
         gcc
         pkg-config
-        openssl
+        openssl.dev
         pavucontrol
         nerdfonts
         firefox
@@ -105,17 +101,17 @@ imports =
 
     services.openssh.enable = true;
 
-    system.stateVersion = "23.05"; # Did you read the comment?
+    system.stateVersion = "23.05";
 
     nix = {
         package = pkgs.nixFlakes;
         extraOptions = "experimental-features = nix-command flakes";
     };
+    nixpkgs.config.allowUnfree = true;
 
     environment.variables = rec {
         EDITOR = "nvim";
     };
-
 
 }
 

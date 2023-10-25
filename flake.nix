@@ -16,14 +16,13 @@
       inherit system;
       config.allowUnfree = true;
     };
-
     lib = nixpkgs.lib;
   in {
     nixosConfigurations = {
-      nix = lib.nixosSystem {
+      notebook = lib.nixosSystem {
         inherit system;
         modules = [ 
-          ./hosts/nix/configuration.nix 
+          ./hosts/notebook/configuration.nix 
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
@@ -33,11 +32,10 @@
           }
         ];
       };
-
-      nixos = lib.nixosSystem {
+      nix = lib.nixosSystem {
         inherit system;
         modules = [ 
-          ./hosts/nixos/configuration.nix 
+          ./hosts/nix/configuration.nix 
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;

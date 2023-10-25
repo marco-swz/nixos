@@ -14,10 +14,10 @@ imports =
     #};
     
     # Use the systemd-boot EFI boot loader.
-    boot.loader.grub.enable = true;
-    boot.loader.grub.device = "/dev/sda";
+    boot.loader.systemd-boot.enable = true;
+    boot.loader.efi.canTouchEfiVariables = true;
 
-    networking.hostName = "nixos"; # Define your hostname.
+    networking.hostName = "notebook"; # Define your hostname.
     networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
 
     time.timeZone = "Europe/Vienna";
@@ -111,6 +111,7 @@ imports =
         package = pkgs.nixFlakes;
         extraOptions = "experimental-features = nix-command flakes";
     };
+    nixpkgs.config.allowUnfree = true;
 
     environment.variables = rec {
         EDITOR = "nvim";
