@@ -89,6 +89,7 @@ imports =
         wget
         git
         gcc
+        alacritty    
         pkg-config
         openssl
         pavucontrol

@@ -27,7 +27,10 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.marco = {
-              imports = [ ./home.nix ];
+              imports = [ ./users/marco.nix ];
+            };
+            home-manager.users.work = {
+              imports = [ ./users/work.nix ];
             };
           }
         ];
@@ -40,7 +43,10 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.marco = {
-              imports = [ ./home.nix ];
+              imports = [ ./users/marco.nix ];
+            };
+            home-manager.users.work = {
+              imports = [ ./users/work.nix ];
             };
           }
         ];

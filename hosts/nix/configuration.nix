@@ -76,6 +76,11 @@ imports =
         extraGroups = [ "wheel" "networkmanager" "kvm" "libwirtd" "docker" ];
         packages = with pkgs; [];
     };
+    users.users.work = {
+        isNormalUser = true;
+        extraGroups = [ "wheel" "networkmanager" "kvm" "libwirtd" "docker" ];
+        packages = with pkgs; [];
+    };
 
     # List packages installed in system profile. To search, run:
     # $ nix search wget
@@ -85,6 +90,7 @@ imports =
         wget
         git
         gcc
+        alacritty    
         pkg-config
         openssl.dev
         pavucontrol
