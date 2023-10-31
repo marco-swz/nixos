@@ -80,6 +80,11 @@ imports =
         extraGroups = [ "wheel" "networkmanager" "kvm" "libwirtd" "docker" ];
         packages = with pkgs; [];
     };
+    users.users.work = {
+        isNormalUser = true;
+        extraGroups = [ "wheel" "networkmanager" "kvm" "libwirtd" "docker" ];
+        packages = with pkgs; [];
+    };
 
     # List packages installed in system profile. To search, run:
     # $ nix search wget
@@ -106,7 +111,7 @@ imports =
 
     services.openssh.enable = true;
 
-    system.stateVersion = "23.05"; # Did you read the comment?
+    system.stateVersion = "23.05";
 
     nix = {
         package = pkgs.nixFlakes;
