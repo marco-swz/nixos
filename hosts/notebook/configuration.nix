@@ -101,6 +101,8 @@ imports =
         nerdfonts
         firefox
         networkmanagerapplet
+        udiskie
+        bemenu
         zip
         unzip
         docker
