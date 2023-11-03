@@ -14,10 +14,10 @@ imports =
     #};
     
     # Use the systemd-boot EFI boot loader.
-    boot.loader.grub.enable = true;
-    boot.loader.grub.device = "/dev/sda";
+    boot.loader.systemd-boot.enable = true;
+    boot.loader.efi.canTouchEfiVariables = true;
 
-    networking.hostName = "nix"; # Define your hostname.
+    networking.hostName = "desktop"; # Define your hostname.
     networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
 
     time.timeZone = "Europe/Vienna";
@@ -50,6 +50,10 @@ imports =
 
     hardware.bluetooth.enable = true;
 
+    # Enable sound.
+    #sound.enable = true;
+    #hardware.pulseaudio.enable = true;
+
     security.rtkit.enable = true;
     services.pipewire = {
         enable = true;
@@ -76,11 +80,6 @@ imports =
         extraGroups = [ "wheel" "networkmanager" "kvm" "libwirtd" "docker" ];
         packages = with pkgs; [];
     };
-    users.users.work = {
-        isNormalUser = true;
-        extraGroups = [ "wheel" "networkmanager" "kvm" "libwirtd" "docker" ];
-        packages = with pkgs; [];
-    };
 
     # List packages installed in system profile. To search, run:
     # $ nix search wget
@@ -92,7 +91,7 @@ imports =
         gcc
         alacritty    
         pkg-config
-        openssl.dev
+        openssl
         pavucontrol
         nerdfonts
         firefox
@@ -120,6 +119,7 @@ imports =
     environment.variables = rec {
         EDITOR = "nvim";
     };
+
 
 }
 
