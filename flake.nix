@@ -29,24 +29,31 @@
             home-manager.users.marco = {
               imports = [ ./users/marco.nix ];
             };
-            home-manager.users.work = {
-              imports = [ ./users/work.nix ];
-            };
           }
         ];
       };
-      nix = lib.nixosSystem {
+      desktop = lib.nixosSystem {
         inherit system;
         modules = [ 
-          ./hosts/nix/configuration.nix 
+          ./hosts/desktop/configuration.nix 
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.marco = {
               imports = [ ./users/marco.nix ];
             };
-            home-manager.users.work = {
-              imports = [ ./users/work.nix ];
+          }
+        ];
+      };
+      desktop-old = lib.nixosSystem {
+        inherit system;
+        modules = [ 
+          ./hosts/desktop-old/configuration.nix 
+          home-manager.nixosModules.home-manager {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.marco = {
+              imports = [ ./users/marco.nix ];
             };
           }
         ];
