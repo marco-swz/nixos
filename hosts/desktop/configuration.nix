@@ -33,7 +33,6 @@ imports =
 
         xwayland = {
             enable = true;
-            hidpi = false;
         };
     };
 
@@ -102,13 +101,14 @@ imports =
         unzip
         docker
         tmux
+        pciutils
     ];
 
     virtualisation.docker.enable = true;
 
     services.openssh.enable = true;
 
-    system.stateVersion = "23.05";
+    system.stateVersion = "unstable";
 
     nix = {
         package = pkgs.nixFlakes;
@@ -120,6 +120,26 @@ imports =
         EDITOR = "nvim";
     };
 
+    hardware.opengl = {
+        enable = true;
+        driSupport = true;
+        driSupport32Bit = true;
+    };
 
+    services.xserver.videoDrivers = ["nvidia"];
+
+    hardware.nvidia = {
+        modesetting.enable = true;
+        powerManagement.enable = false;
+        powerManagement.finegrained = false;
+        open = false;
+        nvidiaSettings = true;
+        package = config.boot.kernelPackages.nvidiaPackages.stable;
+
+        prime = {
+            amdgpuBusId = "PCI:12:0:0";
+            nvidiaBusId = "PCI:1:0:0";
+        };
+    };
 }
 
