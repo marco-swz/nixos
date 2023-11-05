@@ -103,12 +103,15 @@ imports =
         tmux
         pciutils
     ];
+    environment.variables = rec {
+        WLR_NO_HARDWARE_CURSORS = "1";
+    };
 
     virtualisation.docker.enable = true;
 
     services.openssh.enable = true;
 
-    system.stateVersion = "unstable";
+    system.stateVersion = "23.05";
 
     nix = {
         package = pkgs.nixFlakes;
@@ -136,10 +139,11 @@ imports =
         nvidiaSettings = true;
         package = config.boot.kernelPackages.nvidiaPackages.stable;
 
-        prime = {
-            amdgpuBusId = "PCI:12:0:0";
-            nvidiaBusId = "PCI:1:0:0";
-        };
+        #prime = {
+        #    #sync.enable = true;
+        #    amdgpuBusId = "PCI:12:0:0";
+        #    nvidiaBusId = "PCI:1:0:0";
+        #};
     };
 }
 
