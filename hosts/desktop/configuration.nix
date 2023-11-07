@@ -111,7 +111,7 @@ imports =
 
     services.openssh.enable = true;
 
-    system.stateVersion = "23.05";
+    system.stateVersion = "unstable";
 
     nix = {
         package = pkgs.nixFlakes;
