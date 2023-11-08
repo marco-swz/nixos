@@ -33,7 +33,6 @@ imports =
 
         xwayland = {
             enable = true;
-            hidpi = false;
         };
     };
 
