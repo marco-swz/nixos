@@ -1,8 +1,9 @@
-{ config, pkgs, ... }:
+{ inputs, config, pkgs, ... }:
 
 {
     imports = [
         ./hardware-configuration.nix
+        inputs.home-manager.nixosModules.home-manager
     ];
     
     system.stateVersion = "unstable";
@@ -10,6 +11,24 @@
     boot.loader = {
         systemd-boot.enable = true;
         efi.canTouchEfiVariables = true;
+    };
+
+    hardware = {
+        opengl = {
+            enable = true;
+            driSupport = true;
+            driSupport32Bit = true;
+        };
+
+        bluetooth.enable = true;
+        nvidia = {
+            modesetting.enable = true;
+            powerManagement.enable = false;
+            powerManagement.finegrained = false;
+            open = false;
+            nvidiaSettings = true;
+            package = config.boot.kernelPackages.nvidiaPackages.stable;
+        };
     };
 
     networking = {
@@ -32,9 +51,7 @@
         enableNvidiaPatches = true;
     };
 
-
     security.rtkit.enable = true;
-
 
     users.users.marco = {
         isNormalUser = true;
@@ -55,16 +72,8 @@
         };
     };
 
-    nix = {
-        package = pkgs.nixFlakes;
-        extraOptions = "experimental-features = nix-command flakes";
-    };
-
-    nixpkgs.config.allowUnfree = true;
-
     environment = {
         variables = {
-            EDITOR = "nvim";
             # To prevent invisible cursor on wayland
             WLR_NO_HARDWARE_CURSORS = "1";
             # Hint electron apps to use wayland
@@ -112,21 +121,15 @@
         ];
     };
 
-    hardware = {
-        opengl = {
-            enable = true;
-            driSupport = true;
-            driSupport32Bit = true;
-        };
+    nix = {
+        package = pkgs.nixFlakes;
+        extraOptions = "experimental-features = nix-command flakes";
+    };
 
-        bluetooth.enable = true;
-        nvidia = {
-            modesetting.enable = true;
-            powerManagement.enable = false;
-            powerManagement.finegrained = false;
-            open = false;
-            nvidiaSettings = true;
-            package = config.boot.kernelPackages.nvidiaPackages.stable;
+    home-manager = {
+        extraSpecialArgs = { inherit inputs pkgs; };
+        users = {
+            marco = import ./../../users/marco.nix;
         };
     };
 }

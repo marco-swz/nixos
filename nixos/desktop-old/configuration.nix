@@ -1,19 +1,11 @@
-{ config, pkgs, ... }:
+{ inputs, config, pkgs, ... }:
 
 {
-imports =
-    [ # Include the results of the hardware scan.
+    imports = [
         ./hardware-configuration.nix
+        inputs.home-manager.nixosModules.home-manager
     ];
 
-    #boot.loader.grub = {
-    #   enable = true;
-    #  configurationLimit = 5;
-    #   device = "nodev";
-    #   efiSupport = true;
-    #};
-    
-    # Use the systemd-boot EFI boot loader.
     boot.loader.grub.enable = true;
     boot.loader.grub.device = "/dev/sda";
 
@@ -115,10 +107,12 @@ imports =
         package = pkgs.nixFlakes;
         extraOptions = "experimental-features = nix-command flakes";
     };
-    nixpkgs.config.allowUnfree = true;
 
-    environment.variables = rec {
-        EDITOR = "nvim";
+    home-manager = {
+        extraSpecialArgs = { inherit inputs pkgs; };
+        users = {
+            marco = import ./../../users/marco.nix;
+        };
     };
 
 }

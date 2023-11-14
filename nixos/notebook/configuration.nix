@@ -1,8 +1,9 @@
-{ config, pkgs, ... }:
+{ inputs,config, pkgs, ... }:
 
 {
     imports = [
         ./hardware-configuration.nix
+        inputs.home-manager.nixosModules.home-manager
     ];
 
     system.stateVersion = "unstable";
@@ -111,6 +112,11 @@
         extraOptions = "experimental-features = nix-command flakes";
     };
 
-    nixpkgs.config.allowUnfree = true;
+    home-manager = {
+        extraSpecialArgs = { inherit inputs pkgs; };
+        users = {
+            marco = import ./../../users/marco.nix;
+        };
+    };
 }
 
