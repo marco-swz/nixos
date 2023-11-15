@@ -25,6 +25,8 @@
         python311Packages.pip
         nodejs_20
         obsidian
+        #llvmPackages_16.clang-unwrapped
+        clang-tools
     ];
 
     # TODO: Fix output format
