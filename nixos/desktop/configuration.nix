@@ -6,7 +6,7 @@
         inputs.home-manager.nixosModules.home-manager
     ];
     
-    system.stateVersion = "unstable";
+    system.stateVersion = "23.11";
 
     boot.loader = {
         systemd-boot.enable = true;
@@ -48,7 +48,6 @@
     programs.hyprland = {
         enable = true;
         xwayland.enable = true;
-        enableNvidiaPatches = true;
     };
 
     security.rtkit.enable = true;
