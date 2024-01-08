@@ -6,7 +6,7 @@
         inputs.home-manager.nixosModules.home-manager
     ];
 
-    system.stateVersion = "unstable";
+    system.stateVersion = "23.11";
 
     boot.loader = {
         systemd-boot.enable = true;
@@ -73,6 +73,7 @@
             unzip
             docker
             tmux
+            pciutils
             (waybar.overrideAttrs (oldAttrs: {
                 mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
             }))
