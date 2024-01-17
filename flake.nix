@@ -3,16 +3,22 @@
 
     inputs = {
         nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+        nixpkgs2205.url = "github:nixos/nixpkgs/nixos-22.05";
         home-manager = {
             url = "github:nix-community/home-manager";
             inputs.nixpkgs.follows = "nixpkgs";
         };
     };
 
-    outputs = { self, nixpkgs, ... }@inputs:
+    outputs = { self, nixpkgs, nixpkgs2205, ... }@inputs:
     let
         system = "x86_64-linux";
         pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+        };
+
+        pkgs2205 = import nixpkgs2205 {
             inherit system;
             config.allowUnfree = true;
         };
@@ -26,7 +32,7 @@
                 ];
             };
             desktop = nixpkgs.lib.nixosSystem {
-                specialArgs = { inherit inputs system pkgs; };
+                specialArgs = { inherit inputs system pkgs pkgs2205; };
                 modules = [ 
                     ./nixos/desktop/configuration.nix 
                 ];

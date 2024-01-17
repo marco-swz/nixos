@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, pkgs2205, ... }:
 {
     home.username = "marco";
     home.homeDirectory = "/home/marco";
@@ -24,7 +24,7 @@
         ]))
         python311Packages.pip
         nodejs_20
-        obsidian
+        pkgs2205.obsidian
         clang-tools
         glibc
         thunderbird
