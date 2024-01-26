@@ -16,11 +16,15 @@
         pkgs = import nixpkgs {
             inherit system;
             config.allowUnfree = true;
+            config.permittedInsecurePackages = [
+                "electron-25.9.0"
+            ];
         };
 
         pkgs2205 = import nixpkgs2205 {
             inherit system;
             config.allowUnfree = true;
+
         };
 
     in {

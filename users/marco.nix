@@ -23,8 +23,11 @@
             polars
         ]))
         python311Packages.pip
+        cargo
+        go
         nodejs_20
         pkgs2205.obsidian
+        #obsidian
         clang-tools
         glibc
         thunderbird
