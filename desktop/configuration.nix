@@ -104,16 +104,14 @@
             pkg-config
             openssl
             pavucontrol
-            nerdfonts
             firefox
             networkmanagerapplet
             udiskie
             bemenu
             zip
             unzip
-            docker
-            tmux
             pciutils
+            home-manager
             (waybar.overrideAttrs (oldAttrs: {
                 mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
             }))
@@ -125,11 +123,11 @@
         extraOptions = "experimental-features = nix-command flakes";
     };
 
-    home-manager = {
-        extraSpecialArgs = { inherit inputs pkgs pkgs2205; };
-        users = {
-            marco = import ./../../users/marco.nix;
-        };
-    };
+    #home-manager = {
+    #    extraSpecialArgs = { inherit inputs pkgs pkgs2205; };
+    #    users = {
+    #        marco = import ./../../users/marco.nix;
+    #    };
+    #};
 }
 
