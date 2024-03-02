@@ -112,6 +112,7 @@
             unzip
             pciutils
             home-manager
+            wl-clipboard
             (waybar.overrideAttrs (oldAttrs: {
                 mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
             }))
