@@ -1,4 +1,4 @@
-{ inputs, config, pkgs, pkgs2205, ... }:
+{ inputs, config, pkgs ... }:
 
 {
     imports = [
@@ -123,12 +123,5 @@
         package = pkgs.nixFlakes;
         extraOptions = "experimental-features = nix-command flakes";
     };
-
-    #home-manager = {
-    #    extraSpecialArgs = { inherit inputs pkgs pkgs2205; };
-    #    users = {
-    #        marco = import ./../../users/marco.nix;
-    #    };
-    #};
 }
 

@@ -51,7 +51,10 @@
 
     environment = {
         variables = {
-            EDITOR = "nvim";
+            # To prevent invisible cursor on wayland
+            WLR_NO_HARDWARE_CURSORS = "1";
+            # Hint electron apps to use wayland
+            NIXOS_OZONE_WL = "1";
         };
 
         systemPackages = with pkgs; [
@@ -64,16 +67,15 @@
             pkg-config
             openssl
             pavucontrol
-            nerdfonts
             firefox
             networkmanagerapplet
             udiskie
             bemenu
             zip
             unzip
-            docker
-            tmux
             pciutils
+            home-manager
+            wl-clipboard
             (waybar.overrideAttrs (oldAttrs: {
                 mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
             }))
@@ -111,13 +113,6 @@
     nix = {
         package = pkgs.nixFlakes;
         extraOptions = "experimental-features = nix-command flakes";
-    };
-
-    home-manager = {
-        extraSpecialArgs = { inherit inputs pkgs; };
-        users = {
-            marco = import ./../../users/marco.nix;
-        };
     };
 }
 
