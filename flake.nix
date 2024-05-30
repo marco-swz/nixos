@@ -28,18 +28,21 @@
             notebook = nixpkgs.lib.nixosSystem {
                 specialArgs = { inherit inputs system pkgs pkgsUnstable; };
                 modules = [ 
+                    ./global.nix 
                     ./notebook/configuration.nix 
                 ];
             };
             desktop = nixpkgs.lib.nixosSystem {
                 specialArgs = { inherit inputs system pkgs pkgsUnstable; };
                 modules = [ 
+                    ./global.nix 
                     ./desktop/configuration.nix 
                 ];
             };
             desktop-old = nixpkgs.lib.nixosSystem {
                 specialArgs = { inherit inputs system pkgs; };
                 modules = [ 
+                    ./global.nix 
                     ./desktop-old/configuration.nix 
                 ];
             };
