@@ -25,6 +25,7 @@
     };
 
     programs.hyprland = {
+        package = pkgsUnstable.hyprland;
         enable = true;
         xwayland.enable = true;
     };
@@ -50,6 +51,10 @@
         pipewire.wireplumber = {
             enable = true;
         };
+        # For the USB - SPI/I2C adapter
+        udev.extraRules = ''
+            SUBSYSTEM=="usb", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="5512", MODE:="0666"
+        '';
     };
 
     environment = {
