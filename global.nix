@@ -55,6 +55,9 @@
         udev.extraRules = ''
             SUBSYSTEM=="usb", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="5512", MODE:="0666"
         '';
+
+        gvfs.enable = true;
+        udisks2.enable = true;
     };
 
     environment = {
@@ -101,6 +104,7 @@
 
     hardware = {
         bluetooth.enable = true;
+        bluetooth.powerOnBoot = true;
         opengl = {
             enable = true;
             driSupport = true;
