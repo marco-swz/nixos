@@ -25,12 +25,22 @@
     };
 
     programs.hyprland = {
-        package = pkgsUnstable.hyprland;
+        #package = pkgsUnstable.hyprland;
         enable = true;
         xwayland.enable = true;
     };
 
+    programs.gnupg.agent = {
+        enable = true;
+        enableSSHSupport = true;
+    };
+
     security.rtkit.enable = true;
+
+    security.pam.services = {
+        login.u2fAuth = true;
+        sudo.u2fAuth = true;
+    };
 
     users.users.marco = {
         isNormalUser = true;
@@ -56,8 +66,11 @@
             SUBSYSTEM=="usb", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="5512", MODE:="0666"
         '';
 
+        udev.packages = [ pkgs.yubikey-personalization ];
+
         gvfs.enable = true;
         udisks2.enable = true;
+        pcscd.enable = true;
     };
 
     environment = {
@@ -91,6 +104,7 @@
             pciutils
             home-manager
             wl-clipboard
+            yubikey-manager
             (waybar.overrideAttrs (oldAttrs: {
                 mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
             }))
