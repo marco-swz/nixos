@@ -39,6 +39,13 @@
                     ./desktop/configuration.nix 
                 ];
             };
+            desktop2 = nixpkgs.lib.nixosSystem {
+                specialArgs = { inherit inputs system pkgs pkgsUnstable; };
+                modules = [
+                    ./global.nix
+                    ./desktop2/configuration.nix
+                ];
+            };
             desktop-old = nixpkgs.lib.nixosSystem {
                 specialArgs = { inherit inputs system pkgs; };
                 modules = [ 

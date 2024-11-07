@@ -8,5 +8,13 @@
     boot.loader.grub.device = "/dev/sda";
 
     networking.hostName = "nix"; 
+
+    programs.hyprland = {
+        #package = pkgsUnstable.hyprland;
+        enable = true;
+        xwayland.enable = true;
+    };
+
+    system.stateVersion = "23.11";
 }
 

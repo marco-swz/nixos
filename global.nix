@@ -4,8 +4,6 @@
         inputs.home-manager.nixosModules.home-manager
     ];
 
-    system.stateVersion = "23.11";
-
     boot.loader = {
         systemd-boot.enable = true;
         efi.canTouchEfiVariables = true;
@@ -22,12 +20,6 @@
     console = {
         font = "Lat2-Terminus16";
         keyMap = "us";
-    };
-
-    programs.hyprland = {
-        #package = pkgsUnstable.hyprland;
-        enable = true;
-        xwayland.enable = true;
     };
 
     programs.gnupg.agent = {

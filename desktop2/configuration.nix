@@ -5,7 +5,7 @@
     ];
 
     networking = {
-        hostName = "desktop";
+        hostName = "desktop2";
     };
 
     hardware = {
@@ -19,15 +19,19 @@
         };
     };
 
-    programs.hyprland = {
-        #package = pkgsUnstable.hyprland;
-        enable = true;
-        xwayland.enable = true;
-    };
-
     services = {
+	xserver.enable = true;
         xserver.videoDrivers = ["nvidia"];
     };
 
-    system.stateVersion = "23.11";
+    users.users.marco.packages = with pkgs; [
+        kdePackages.kate
+    ];
+
+    services.displayManager.sddm.enable = true;
+    services.desktopManager.plasma6.enable = true;
+    services.printing.enable = true;
+    security.rtkit.enable = true;
+
+    system.stateVersion = "24.05";
 }
