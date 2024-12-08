@@ -2,7 +2,7 @@
     description = "Nix flake for managing system states";
 
     inputs = {
-        nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+        nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
         nixpkgsUnstable.url = "github:nixos/nixpkgs/nixos-unstable";
         home-manager = {
             url = "github:nix-community/home-manager";
@@ -16,9 +16,9 @@
         pkgs = import nixpkgs {
             inherit system;
             config.allowUnfree = true;
-            config.permittedInsecurePackages = [
-                "electron-25.9.0"
-            ];
+                #config.permittedInsecurePackages = [
+                #    "electron-25.9.0"
+                #];
         };
         pkgsUnstable = import nixpkgsUnstable {
             inherit system;

@@ -104,17 +104,15 @@
     };
 
     nix = {
-        package = pkgs.nixFlakes;
+        package = pkgs.nix;
         extraOptions = "experimental-features = nix-command flakes";
     };
 
     hardware = {
         bluetooth.enable = true;
         bluetooth.powerOnBoot = true;
-        opengl = {
+        graphics = {
             enable = true;
-            driSupport = true;
-            driSupport32Bit = true;
         };
     };
 }
