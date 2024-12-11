@@ -82,6 +82,7 @@
             vim
             wget
             git
+            gnumake
             gcc
             alacritty    
             pkg-config
