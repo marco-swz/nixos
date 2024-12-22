@@ -39,7 +39,7 @@
 
     users.users.marco = {
         isNormalUser = true;
-        extraGroups = [ "wheel" "networkmanager" "kvm" "libwirtd" "docker" "plugdev" ];
+        extraGroups = [ "wheel" "networkmanager" "kvm" "libwirtd" "docker" "plugdev" "dialout" ];
         packages = with pkgs; [];
         shell = pkgs.zsh;
     };
