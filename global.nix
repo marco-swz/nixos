@@ -22,9 +22,12 @@
         keyMap = "us";
     };
 
-    programs.gnupg.agent = {
-        enable = true;
-        enableSSHSupport = true;
+    programs = {
+        gnupg.agent = {
+            enable = true;
+            enableSSHSupport = true;
+        };
+        zsh.enable = true;
     };
 
     security.rtkit.enable = true;
@@ -38,6 +41,7 @@
         isNormalUser = true;
         extraGroups = [ "wheel" "networkmanager" "kvm" "libwirtd" "docker" ];
         packages = with pkgs; [];
+        shell = pkgs.zsh;
     };
 
     virtualisation.docker.enable = true;
@@ -53,9 +57,11 @@
         pipewire.wireplumber = {
             enable = true;
         };
-        # For the USB - SPI/I2C adapter
+        # - USB-to-SPI/I2C adapter
+        # - FT232H SPI/I2C adapter
         udev.extraRules = ''
-            SUBSYSTEM=="usb", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="5512", MODE:="0666"
+            SUBSYSTEM=="usb", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="5512", MODE="0666"
+            SUBSYSTEM=="usb", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6014", MODE="0666"
         '';
 
         udev.packages = [ pkgs.yubikey-personalization ];
