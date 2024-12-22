@@ -39,7 +39,7 @@
 
     users.users.marco = {
         isNormalUser = true;
-        extraGroups = [ "wheel" "networkmanager" "kvm" "libwirtd" "docker" ];
+        extraGroups = [ "wheel" "networkmanager" "kvm" "libwirtd" "docker" "plugdev" ];
         packages = with pkgs; [];
         shell = pkgs.zsh;
     };
@@ -59,9 +59,15 @@
         };
         # - USB-to-SPI/I2C adapter
         # - FT232H SPI/I2C adapter
+        # - ZSA Voyager
+        # - Oryx Webflash
+        # - Oryx Webflash
         udev.extraRules = ''
             SUBSYSTEM=="usb", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="5512", MODE="0666"
             SUBSYSTEM=="usb", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6014", MODE="0666"
+            SUBSYSTEMS=="usb", ATTRS{idVendor}=="3297", MODE:="0666", SYMLINK+="ignition_dfu"
+            KERNEL=="hidraw*", ATTRS{idVendor}=="16c0", MODE="0664", GROUP="plugdev"
+            KERNEL=="hidraw*", ATTRS{idVendor}=="3297", MODE="0664", GROUP="plugdev"
         '';
 
         udev.packages = [ pkgs.yubikey-personalization ];
