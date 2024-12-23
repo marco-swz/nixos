@@ -27,7 +27,6 @@
             enable = true;
             enableSSHSupport = true;
         };
-        zsh.enable = true;
     };
 
     security.rtkit.enable = true;
@@ -41,7 +40,7 @@
         isNormalUser = true;
         extraGroups = [ "wheel" "networkmanager" "kvm" "libwirtd" "docker" "plugdev" "dialout" ];
         packages = with pkgs; [];
-        shell = pkgs.zsh;
+        shell = pkgs.nushell;
     };
 
     virtualisation.docker.enable = true;
