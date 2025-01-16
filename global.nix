@@ -76,6 +76,11 @@
         gvfs.enable = true;
         udisks2.enable = true;
         pcscd.enable = true;
+
+        input-remapper = {
+            enable = true;
+            enableUdevRules = true;
+        };
     };
 
     environment = {
