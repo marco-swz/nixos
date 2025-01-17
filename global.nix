@@ -77,9 +77,22 @@
         udisks2.enable = true;
         pcscd.enable = true;
 
-        input-remapper = {
+        keyd = {
             enable = true;
-            enableUdevRules = true;
+            keyboards.default.settings = {
+                main = {
+                    capslock = "layer(control)";
+                    tab = "esc";
+                };
+                control = {
+                    h = "left";
+                    j = "down";
+                    k = "up";
+                    l = "right";
+                    ";" = "tab";
+                    "'" = "S-tab";
+                };
+            };
         };
     };
 
@@ -115,6 +128,9 @@
             pciutils
             home-manager
             wl-clipboard
+            xorg.xkbcomp
+            xorg.setxkbmap
+            xorg.xmodmap
             yubikey-manager
             (waybar.overrideAttrs (oldAttrs: {
                 mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
