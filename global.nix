@@ -140,7 +140,10 @@
 
     nix = {
         package = pkgs.nix;
-        extraOptions = "experimental-features = nix-command flakes";
+        extraOptions = ''
+            experimental-features = nix-command flakes
+            trusted-users = root marco
+        '';
     };
 
     hardware = {
