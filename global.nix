@@ -27,6 +27,8 @@
             enable = true;
             enableSSHSupport = true;
         };
+
+        ssh.startAgent = false;
     };
 
     security.rtkit.enable = true;
@@ -106,6 +108,11 @@
 
         loginShellInit = ''
             [[ "$(tty)" == /dev/tty1 ]] && Hyprland
+        '';
+
+        shellInit = ''
+            gpg-connect-agent /bye
+            export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
         '';
 
         systemPackages = with pkgs; [
