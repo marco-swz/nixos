@@ -22,15 +22,6 @@
         keyMap = "us";
     };
 
-    programs = {
-        gnupg.agent = {
-            enable = true;
-            enableSSHSupport = true;
-        };
-
-        ssh.startAgent = false;
-    };
-
     security.rtkit.enable = true;
 
     security.pam.services = {
@@ -98,6 +89,16 @@
         };
     };
 
+     programs = {
+        gnupg.agent = {
+            enable = true;
+            enableSSHSupport = true;
+            enableExtraSocket = true;
+        };
+
+        ssh.startAgent = false;
+    };
+
     environment = {
         variables = {
             # To prevent invisible cursor on wayland
@@ -108,11 +109,6 @@
 
         loginShellInit = ''
             [[ "$(tty)" == /dev/tty1 ]] && Hyprland
-        '';
-
-        shellInit = ''
-            gpg-connect-agent /bye
-            export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
         '';
 
         systemPackages = with pkgs; [
