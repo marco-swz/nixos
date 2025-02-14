@@ -33,7 +33,6 @@
         isNormalUser = true;
         extraGroups = [ "wheel" "networkmanager" "kvm" "libwirtd" "docker" "plugdev" "dialout" ];
         packages = with pkgs; [];
-        shell = pkgs.nushell;
     };
 
     virtualisation.docker.enable = true;
