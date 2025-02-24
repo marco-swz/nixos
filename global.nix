@@ -31,6 +31,7 @@
 
     users.users.marco = {
         isNormalUser = true;
+        shell = pkgs.bashInteractive;
         extraGroups = [ "wheel" "networkmanager" "kvm" "libwirtd" "docker" "plugdev" "dialout" ];
         packages = with pkgs; [];
     };
@@ -63,7 +64,10 @@
             KERNEL=="ttyACM[0-9]*",MODE="0666"
         '';
 
-        udev.packages = [ pkgs.yubikey-personalization ];
+        udev.packages = [
+            pkgs.yubikey-personalization
+            pkgs.libu2f-host
+        ];
 
         gvfs.enable = true;
         udisks2.enable = true;
@@ -73,8 +77,9 @@
             enable = true;
             keyboards.default.settings = {
                 main = {
-                    capslock = "layer(control)";
+                    leftalt = "layer(control)";
                     tab = "esc";
+                    capslock = "overload(alt, esc)";
                 };
                 control = {
                     h = "left";
@@ -108,9 +113,16 @@
 
         loginShellInit = ''
             [[ "$(tty)" == /dev/tty1 ]] && Hyprland
+             gpg-connect-agent /bye
+            GPG_TTY=$(tty)
+            export GPG_TTY
         '';
 
         systemPackages = with pkgs; [
+            openssl
+            opensc
+            pcsctools
+            libu2f-host
             tree
             vim
             wget
@@ -119,7 +131,6 @@
             gcc
             alacritty    
             pkg-config
-            openssl
             pavucontrol
             firefox
             networkmanagerapplet
@@ -134,6 +145,7 @@
             xorg.setxkbmap
             xorg.xmodmap
             yubikey-manager
+            yubikey-personalization
             (waybar.overrideAttrs (oldAttrs: {
                 mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
             }))
