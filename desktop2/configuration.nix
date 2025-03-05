@@ -89,6 +89,7 @@
     environment.systemPackages = with pkgs; [ 
         gnomeExtensions.appindicator 
         gnomeExtensions.dash-to-panel
+        gnomeExtensions.bottom-panel
         dconf-editor
     ];
     services.udev.packages = [ pkgs.gnome.gnome-settings-daemon ];
