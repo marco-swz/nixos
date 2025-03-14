@@ -1,4 +1,4 @@
-{ inputs, config, pkgs, pkgsUnstable, ... }:
+{ inputs, config, pkgs, pkgsUnstable, lib, ... }:
 {
     imports = [
         inputs.home-manager.nixosModules.home-manager
@@ -10,7 +10,7 @@
     };
 
     networking = {
-        networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+        networkmanager.enable = true;
     };
 
     time.timeZone = "Europe/Vienna";
@@ -24,10 +24,28 @@
 
     security.rtkit.enable = true;
 
-    security.pam.services = {
-        login.u2fAuth = true;
-        sudo.u2fAuth = true;
+    security.pam = {
+        u2f = {
+            enable = true;
+            settings = {
+                interactive = true;
+                cue = true;
+                origin = "pam://yubi";
+                authfile = pkgs.writeText "u2f-mappings" (lib.concatStrings [
+                    "marco"
+                    # yubikey-mini
+                    ":qgtGIFyJHe1nQDBKaVblvpyWBUAaG3VFndZlCkamSsi7MrAhxifVEgdyuoaT5A+T8K5vGo7ZYLDLHWBb17zYyQ==,ZQ41wptQfqLb0dhvpYSnaeXOUaohAv0NWSssxXX6oXRceuARUNlu8cJ0agFdyyjHE842TWZovX3aT8dDKCakhw==,es256,+presence"
+                    # yubikey
+                    ":G8xHP1ha6DZUQG8CsOmMdXkPC7CEYr6rEoiJFa7Tfz1xaOjTswA0tnKsmszVsZ8Gn/LuI8ko+1PVw+9LDvkEGw==,7Q2JJ3n3HQH4GHXbW9BIfZsVFL8E9ZByHvmDweo9TtC3rHxPoKbVPPavUNJqFioOFqO6mGS5A0Og5TcJwaxb0g==,es256,+presence"
+                ]);
+            };
+        };
+        services = {
+            login.u2fAuth = true;
+            sudo.u2fAuth = true;
+        };
     };
+
 
     users.users.marco = {
         isNormalUser = true;
@@ -113,9 +131,12 @@
 
         loginShellInit = ''
             [[ "$(tty)" == /dev/tty1 ]] && Hyprland
-             gpg-connect-agent /bye
-            GPG_TTY=$(tty)
-            export GPG_TTY
+        '';
+
+        shellInit = ''
+            gpg-connect-agent /bye
+            export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+            export GPG_TTY="$(tty)"
         '';
 
         systemPackages = with pkgs; [
