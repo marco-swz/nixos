@@ -22,36 +22,36 @@
         keyMap = "us";
     };
 
-    security.rtkit.enable = true;
-
-    security.pam = {
-        u2f = {
-            enable = true;
-            settings = {
-                interactive = true;
-                cue = true;
-                origin = "pam://yubi";
-                authfile = pkgs.writeText "u2f-mappings" (lib.concatStrings [
-                    "marco"
-                    # yubikey-mini
-                    ":qgtGIFyJHe1nQDBKaVblvpyWBUAaG3VFndZlCkamSsi7MrAhxifVEgdyuoaT5A+T8K5vGo7ZYLDLHWBb17zYyQ==,ZQ41wptQfqLb0dhvpYSnaeXOUaohAv0NWSssxXX6oXRceuARUNlu8cJ0agFdyyjHE842TWZovX3aT8dDKCakhw==,es256,+presence"
-                    # yubikey
-                    ":G8xHP1ha6DZUQG8CsOmMdXkPC7CEYr6rEoiJFa7Tfz1xaOjTswA0tnKsmszVsZ8Gn/LuI8ko+1PVw+9LDvkEGw==,7Q2JJ3n3HQH4GHXbW9BIfZsVFL8E9ZByHvmDweo9TtC3rHxPoKbVPPavUNJqFioOFqO6mGS5A0Og5TcJwaxb0g==,es256,+presence"
-                ]);
+    security = {
+        rtkit.enable = true;
+        pam = {
+            u2f = {
+                enable = true;
+                settings = {
+                    interactive = true;
+                    cue = true;
+                    origin = "pam://yubi";
+                    authfile = pkgs.writeText "u2f-mappings" (lib.concatStrings [
+                        "marco"
+                        # yubikey-mini
+                        ":qgtGIFyJHe1nQDBKaVblvpyWBUAaG3VFndZlCkamSsi7MrAhxifVEgdyuoaT5A+T8K5vGo7ZYLDLHWBb17zYyQ==,ZQ41wptQfqLb0dhvpYSnaeXOUaohAv0NWSssxXX6oXRceuARUNlu8cJ0agFdyyjHE842TWZovX3aT8dDKCakhw==,es256,+presence"
+                        # yubikey
+                        ":G8xHP1ha6DZUQG8CsOmMdXkPC7CEYr6rEoiJFa7Tfz1xaOjTswA0tnKsmszVsZ8Gn/LuI8ko+1PVw+9LDvkEGw==,7Q2JJ3n3HQH4GHXbW9BIfZsVFL8E9ZByHvmDweo9TtC3rHxPoKbVPPavUNJqFioOFqO6mGS5A0Og5TcJwaxb0g==,es256,+presence"
+                    ]);
+                };
+            };
+            services = {
+                login.u2fAuth = true;
+                sudo.u2fAuth = true;
             };
         };
-        services = {
-            login.u2fAuth = true;
-            sudo.u2fAuth = true;
-        };
     };
-
 
     users.users.marco = {
         isNormalUser = true;
         shell = pkgs.bashInteractive;
         extraGroups = [ "wheel" "networkmanager" "kvm" "libwirtd" "docker" "plugdev" "dialout" ];
-        packages = with pkgs; [];
+        packages = [];
     };
 
     virtualisation.docker.enable = true;
@@ -67,25 +67,36 @@
         pipewire.wireplumber = {
             enable = true;
         };
-        # - USB-to-SPI/I2C adapter
-        # - FT232H SPI/I2C adapter
-        # - ZSA Voyager
-        # - Oryx Webflash
-        # - Oryx Webflash
-        udev.extraRules = ''
-            SUBSYSTEM=="usb", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="5512", MODE="0666"
-            SUBSYSTEM=="usb", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6014", MODE="0666"
-            SUBSYSTEMS=="usb", ATTRS{idVendor}=="3297", MODE:="0666", SYMLINK+="ignition_dfu"
-            KERNEL=="hidraw*", ATTRS{idVendor}=="16c0", MODE="0664", GROUP="plugdev"
-            KERNEL=="hidraw*", ATTRS{idVendor}=="3297", MODE="0664", GROUP="plugdev"
-            KERNEL=="ttyUSB[0-9]*",MODE="0666"
-            KERNEL=="ttyACM[0-9]*",MODE="0666"
-        '';
+        printing.enable = true;
 
-        udev.packages = [
-            pkgs.yubikey-personalization
-            pkgs.libu2f-host
-        ];
+        udev = {
+            # - USB-to-SPI/I2C adapter
+            # - FT232H SPI/I2C adapter
+            # - ZSA Voyager
+            # - Oryx Webflash
+            # - Oryx Webflash
+            extraRules = ''
+                SUBSYSTEM=="usb", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="5512", MODE="0666"
+                SUBSYSTEM=="usb", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6014", MODE="0666"
+                SUBSYSTEMS=="usb", ATTRS{idVendor}=="3297", MODE:="0666", SYMLINK+="ignition_dfu"
+                KERNEL=="hidraw*", ATTRS{idVendor}=="16c0", MODE="0664", GROUP="plugdev"
+                KERNEL=="hidraw*", ATTRS{idVendor}=="3297", MODE="0664", GROUP="plugdev"
+                KERNEL=="ttyUSB[0-9]*",MODE="0666"
+                KERNEL=="ttyACM[0-9]*",MODE="0666"
+            '';
+
+            packages = [
+                pkgs.yubikey-personalization
+                pkgs.libu2f-host
+                pkgs.gnome.gnome-settings-daemon
+            ];
+        };
+
+        xserver = {
+            enable = true;
+            displayManager.gdm.enable = true;
+            desktopManager.gnome.enable = true;
+        };
 
         gvfs.enable = true;
         udisks2.enable = true;
@@ -139,6 +150,32 @@
             export GPG_TTY="$(tty)"
         '';
 
+        gnome.excludePackages = with pkgs; [
+            orca
+            evince
+            geary
+            gnome-disk-utility
+            gnome-backgrounds
+            gnome-tour
+            gnome-user-docs
+            baobab
+            epiphany
+            gnome-calculator
+            gnome-calendar
+            gnome-characters
+            gnome-console
+            gnome-contacts
+            gnome-logs
+            gnome-maps
+            gnome-music
+            gnome-weather
+            gnome-connections
+            simple-scan
+            snapshot
+            yelp
+            gnome-software
+        ];
+
         systemPackages = with pkgs; [
             openssl
             opensc
@@ -165,11 +202,12 @@
             xorg.xkbcomp
             xorg.setxkbmap
             xorg.xmodmap
+            gnomeExtensions.appindicator 
+            gnomeExtensions.dash-to-panel
+            gnomeExtensions.bottom-panel
+            dconf-editor
             yubikey-manager
             yubikey-personalization
-            (waybar.overrideAttrs (oldAttrs: {
-                mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
-            }))
         ];
     };
 

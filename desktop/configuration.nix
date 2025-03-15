@@ -19,12 +19,6 @@
         };
     };
 
-    programs.hyprland = {
-        #package = pkgsUnstable.hyprland;
-        enable = true;
-        xwayland.enable = true;
-    };
-
     services = {
         xserver.videoDrivers = ["nvidia"];
     };
