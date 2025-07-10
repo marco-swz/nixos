@@ -88,7 +88,7 @@
             packages = [
                 pkgs.yubikey-personalization
                 pkgs.libu2f-host
-                pkgs.gnome.gnome-settings-daemon
+                pkgs.gnome-settings-daemon
             ];
         };
 
