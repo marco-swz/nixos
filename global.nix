@@ -107,7 +107,6 @@
             keyboards.default.settings = {
                 main = {
                     leftalt = "layer(control)";
-                    tab = "esc";
                     capslock = "overload(alt, esc)";
                 };
                 control = {
@@ -115,8 +114,6 @@
                     j = "down";
                     k = "up";
                     l = "right";
-                    ";" = "tab";
-                    "'" = "S-tab";
                 };
             };
         };
