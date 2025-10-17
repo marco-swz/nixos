@@ -106,10 +106,11 @@
             enable = true;
             keyboards.default.settings = {
                 main = {
-                    # leftalt = "layer(move)";
-                    capslock = "overload(leftalt, esc)";
+                    leftalt = "leftcontrol";
+                    capslock = "overload(alt, esc)";
+                    rightcontrol = "leftalt";
                 };
-                leftalt = {
+                alt = {
                     h = "left";
                     j = "down";
                     k = "up";
