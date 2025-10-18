@@ -110,7 +110,7 @@
                     capslock = "overload(alt, esc)";
                     rightcontrol = "leftalt";
                 };
-                alt = {
+                leftcontrol = {
                     h = "left";
                     j = "down";
                     k = "up";
