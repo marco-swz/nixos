@@ -152,7 +152,6 @@
             orca
             evince
             geary
-            gnome-disk-utility
             gnome-backgrounds
             gnome-tour
             gnome-user-docs
@@ -177,7 +176,7 @@
         systemPackages = with pkgs; [
             openssl
             opensc
-            pcsctools
+            pcsc-tools
             libu2f-host
             tree
             vim

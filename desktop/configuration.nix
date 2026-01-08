@@ -9,19 +9,26 @@
     };
 
     hardware = {
-        nvidia = {
-            modesetting.enable = true;
-            powerManagement.enable = false;
-            powerManagement.finegrained = false;
-            open = false;
-            nvidiaSettings = true;
-            package = config.boot.kernelPackages.nvidiaPackages.stable;
+        graphics = {
+            enable = true;
+            enable32Bit = true;
+        };
+        amdgpu = {
+            opencl.enable = true;
         };
     };
 
+    system.stateVersion = "23.11";
+
     services = {
-        xserver.videoDrivers = ["nvidia"];
+        lact = {
+            enable = true;
+        };
     };
 
-    system.stateVersion = "23.11";
+    environment = {
+        systemPackages = with pkgs; [
+            clinfo
+        ];
+    };
 }
