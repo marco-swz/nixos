@@ -104,19 +104,32 @@
 
         keyd = {
             enable = true;
-            keyboards.default.settings = {
-                main = {
-                    leftalt = "leftcontrol";
-                    capslock = "overload(alt, esc)";
-                    rightcontrol = "leftalt";
-                };
-                leftcontrol = {
-                    h = "left";
-                    j = "down";
-                    k = "up";
-                    l = "right";
+            keyboards.default = {
+                ids = [ 
+                    "*" 
+                    # These 3 exclude Razer Orbweaver Chroma
+                    "-1532:0207:44ff54f0" 
+                    "-1532:0207:f22f4c51"
+                    "-1532:0207:79813634"
+                ];
+                settings = {
+                    main = {
+                        leftalt = "leftcontrol";
+                        capslock = "overload(alt, esc)";
+                        rightcontrol = "leftalt";
+                    };
+                    leftcontrol = {
+                        h = "left";
+                        j = "down";
+                        k = "up";
+                        l = "right";
+                    };
                 };
             };
+        };
+
+        input-remapper = {
+            enable = true;
         };
     };
 
