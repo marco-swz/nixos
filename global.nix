@@ -205,6 +205,7 @@
             dconf-editor
             yubikey-manager
             yubikey-personalization
+            openrazer-daemon
         ];
     };
 
@@ -222,5 +223,6 @@
         graphics = {
             enable = true;
         };
+        openrazer.enable = true;
     };
 }
