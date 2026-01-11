@@ -50,7 +50,7 @@
     users.users.marco = {
         isNormalUser = true;
         shell = pkgs.bashInteractive;
-        extraGroups = [ "wheel" "networkmanager" "kvm" "libwirtd" "docker" "plugdev" "dialout" ];
+        extraGroups = [ "wheel" "networkmanager" "kvm" "libwirtd" "docker" "plugdev" "dialout" "openrazer"];
         packages = [];
     };
 
@@ -206,6 +206,7 @@
             yubikey-manager
             yubikey-personalization
             openrazer-daemon
+            polychromatic # frontend for openrazer
         ];
     };
 
