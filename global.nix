@@ -130,6 +130,8 @@
 
         input-remapper = {
             enable = true;
+            serviceWantedBy = [ "multi-user.target" ];
+            enableUdevRules = true;
         };
     };
 
