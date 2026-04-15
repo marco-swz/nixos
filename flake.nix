@@ -50,6 +50,12 @@
                     ./desktop-old/configuration.nix 
                 ];
             };
+            homeserver = nixpkgs.lib.nixosSystem {
+                specialArgs = { inherit inputs system pkgs; };
+                modules = [ 
+                    ./homeserver/configuration.nix 
+                ];
+            };
         };
     };
 }

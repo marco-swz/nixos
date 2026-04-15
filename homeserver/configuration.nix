@@ -17,9 +17,12 @@
 
   networking.hostName = "homeserver"; # Define your hostname.
 
-  networking.networkmanager.enable = true;
-  networking.firewall.allowedTCPPorts = [ 8123 ];
   networking = {
+    networkmanager.enable = true;
+    firewall.allowedTCPPorts = [ 
+      8123 
+      3003
+    ];
     interfaces.enp0s20f0u2c2 = {
       ipv4.addresses = [{
         address = "192.168.254.4";
@@ -114,6 +117,36 @@
           l = "right";
           };
         };
+    };
+
+    adguardhome = {
+      enable = false;
+      settings = {
+        http = {
+          # You can select any ip and port, just make sure to open firewalls where needed
+          address = "127.0.0.1:3003";
+        };
+        dns = {
+          upstream_dns = [
+            "192.168.254.4:8123#home-assistant.local"
+          ];
+        };
+        filtering = {
+          protection_enabled = true;
+          filtering_enabled = true;
+
+          safe_search = {
+            enabled = false;  # Enforcing "Safe search" option for search engines, when possible.
+          };
+        };
+        # The following notation uses map
+        # to not have to manually create {enabled = true; url = "";} for every filter
+        # This is, however, fully optional
+        filters = map(url: { enabled = true; url = url; }) [
+          "https://adguardteam.github.io/HostlistsRegistry/assets/filter_9.txt"  # The Big List of Hacked Malware Web Sites
+          "https://adguardteam.github.io/HostlistsRegistry/assets/filter_11.txt"  # malicious url blocklist
+        ];
+      };
     };
   };
 
