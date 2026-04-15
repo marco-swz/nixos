@@ -119,6 +119,16 @@
         };
     };
 
+    deluge = {
+       enable = true;
+       web = {
+          enable = true;
+          openFirewall = true;
+      };
+      openFirewall = true;
+      dataDir = "/media/deluge/";
+    };
+
     adguardhome = {
       enable = false;
       settings = {
