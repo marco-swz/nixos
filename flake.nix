@@ -8,9 +8,10 @@
             url = "github:nix-community/home-manager";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+        nixarr.url = "github:nix-media-server/nixarr";
     };
 
-    outputs = { self, nixpkgs, nixpkgsUnstable, ... }@inputs:
+    outputs = { self, nixpkgs, nixpkgsUnstable, nixarr, ... }@inputs:
     let
         system = "x86_64-linux";
         pkgs = import nixpkgs {
@@ -54,6 +55,7 @@
                 specialArgs = { inherit inputs system pkgs; };
                 modules = [ 
                     ./homeserver/configuration.nix 
+                    nixarr.nixosModules.default
                 ];
             };
         };

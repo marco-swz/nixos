@@ -56,7 +56,111 @@
     AllowHybridSleep=no
     AllowSuspendThenHibernate=no
   '';
- 
+
+   nixarr = {
+    enable = true;
+    # These two values are also the default, but you can set them to whatever
+    # else you want
+    # WARNING: Do _not_ set them to `/home/user/whatever`, it will not work!
+    mediaDir = "/data/media";
+    stateDir = "/data/media/.state/nixarr";
+
+    vpn = {
+      enable = false;
+      # WARNING: This file must _not_ be in the config git directory
+      # You can usually get this wireguard file from your VPN provider
+      wgConf = "/data/.secret/wg.conf";
+    };
+
+    jellyfin = {
+      enable = true;
+      openFirewall = true;
+    };
+
+    transmission = {
+      enable = true;
+      # vpn.enable = true;
+      peerPort = 51820; # Set this to the port forwarded by your VPN
+    };
+
+    bazarr.enable = true;
+    lidarr = {
+      enable = true;
+      openFirewall = true;
+    };
+    radarr.enable = true;
+    sonarr.enable = true;
+    seerr.enable = true;
+
+      # --- Declarative Prowlarr Settings ---
+    prowlarr = {
+      enable = true;
+      openFirewall = true;
+
+      # settings-sync = {
+        # Automatically sync all enabled Nixarr apps to Prowlarr.
+        # This adds Sonarr, Radarr, Lidarr, and Readarr as applications
+        # with the correct URLs and API keys — no manual setup needed.
+        # enable-nixarr-apps = true;
+
+        # Define tags for organizing indexers
+        # tags = [ "usenet" "torrent" "private" ];
+
+        # Define indexers directly in Nix
+        # indexers = [
+        #   {
+        #     sort_name = "nzbgeek";
+        #     tags = [ "usenet" ];
+        #     fields = {
+        #       # Secrets are read from files at runtime, not stored in the Nix store
+        #       apiKey.secret = "/data/.secret/nzbgeek-api-key";
+        #     };
+        #   }
+        #   {
+        #     sort_name = "torznab";
+        #     name = "Jackett";
+        #     tags = [ "torrent" ];
+        #     fields = {
+        #       baseUrl = "http://localhost:9117/api/v2.0/indexers/all/results/torznab/";
+        #       apiKey.secret = "/data/.secret/jackett-api-key";
+        #     };
+        #   }
+        # ];
+      # };
+    };
+
+    # --- Declarative Sonarr Download Clients ---
+    # sonarr.settings-sync = {
+    #   # Automatically configure Transmission as a download client.
+    #   # Uses the correct port and localhost (works even across VPN boundaries
+    #   # because Nixarr sets up nginx proxies automatically).
+    #   transmission.enable = true;
+    # };
+
+    # # --- Declarative Radarr Download Clients ---
+    # radarr.settings-sync = {
+    #   transmission.enable = true;
+    # };
+
+    # # --- Declarative Bazarr Connections ---
+    # bazarr.settings-sync = {
+    #   # Automatically configure the Sonarr connection in Bazarr.
+    #   # API keys and ports are filled in from Nixarr's configuration.
+    #   sonarr.enable = true;
+    #   sonarr.config = {
+    #     # Optionally only sync subtitles for monitored content
+    #     sync_only_monitored_series = true;
+    #     sync_only_monitored_episodes = true;
+    #   };
+
+    #   # Same for Radarr
+    #   radarr.enable = true;
+    #   radarr.config = {
+    #     sync_only_monitored_movies = true;
+    #   };
+    # };
+  };
+
   services = {
     xserver.xkb = {
       layout = "us";
@@ -119,16 +223,6 @@
         };
     };
 
-    deluge = {
-       enable = true;
-       web = {
-          enable = true;
-          openFirewall = true;
-      };
-      openFirewall = true;
-      dataDir = "/media/deluge/";
-    };
-
     adguardhome = {
       enable = false;
       settings = {
@@ -187,7 +281,8 @@
 
   environment.systemPackages = with pkgs; [
     git
-    neovim
+    helix
+    zellij
   ];
 
   system.stateVersion = "25.05"; # Did you read the comment?
